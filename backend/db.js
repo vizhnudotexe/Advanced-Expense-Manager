@@ -2,8 +2,13 @@ const { Pool } = require('pg');
 const fs = require('fs');
 require('dotenv').config();
 
+let dbUrl = process.env.DATABASE_URL || '';
+if (dbUrl.includes('?')) {
+  dbUrl = dbUrl.split('?')[0];
+}
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: dbUrl,
   ssl: {
     rejectUnauthorized: false,
     ca: fs.readFileSync(__dirname + '/ca.pem').toString(),
