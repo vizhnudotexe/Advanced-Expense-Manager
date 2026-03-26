@@ -1,12 +1,12 @@
 package com.shashank.expensemanager.transactionDb;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Update;
 
 
 import java.util.ArrayList;
@@ -15,6 +15,12 @@ import java.util.List;
 
 @Dao
 public interface TransactionDao {
+
+    @Query("select * from transactionTable order by date DESC")
+    List<TransactionEntry> loadAllTransactionBlocking();
+
+    @Query("select coalesce(sum(case when transactionType='Income' then amount else -amount end),0) from transactionTable where walletType=:wallet")
+    int getWalletBalance(String wallet);
 
     @Query("select * from transactionTable order by date DESC")
     LiveData<List<TransactionEntry>> loadAllTransactions();
@@ -43,6 +49,10 @@ public interface TransactionDao {
     @Delete
     void removeExpense(TransactionEntry transactionEntry);
 
+    @Query("select * from transactionTable where date between :startDate and :endDate")
+    List<TransactionEntry> getTransactionsByDateRange(long startDate, long endDate);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateExpenseDetails(TransactionEntry transactionEntry);
 }
+

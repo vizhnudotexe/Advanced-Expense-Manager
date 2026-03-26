@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/helpToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="#FFFFFF"
+        app:title="Help and Features"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Complete Feature Guide"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Where to find each feature, how to use it, what to experiment with, and pro tips"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="13sp"
+                android:layout_marginBottom="20dp"/>
+
+            <!-- 1. Registration and Login -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Account: Registration and Login"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="The Login screen appears automatically when you open the app for the first time or after you log out. To register, tap the Register link at the very bottom of the Login screen. This brings you to the Registration page where you enter a username, a password, and confirm the password before tapping Register."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to use it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Choose a username you will remember easily since it cannot be changed later. Use a strong password with letters and numbers. After registering, you are taken back to Login. Enter your credentials and you will be logged in and redirected to the main Dashboard. Your session stays active until you manually log out from the top-right menu."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tip"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Write down your username and password somewhere safe. Since there is no password reset feature yet, losing your credentials means you cannot recover your account. If you try to register with a username that is already taken, the app will immediately tell you and ask you to pick a different one."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 2. Dashboard -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Dashboard"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="The Dashboard is the first tab in the bottom navigation bar (the home icon). It is the default screen you land on after logging in. All summary information is displayed here without needing to go anywhere else."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="What you can see and do"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="At the top you see your Total Balance (all income minus all expenses ever). Below are three wallet cards showing the net balance for Cash, UPI, and Card individually. Further down is a bar chart showing spending per category this month. Then the budget progress bar shows how much of your monthly budget is consumed. At the bottom is the Quick AI Insights section with the expense prediction and your financial personality badges."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Add a few test income and expense entries across different wallets and watch how the wallet balance cards update instantly. Add expenses in different categories and see the bar chart grow. Set a monthly budget and then add expenses to watch the progress bar fill up. This is the best way to understand the entire app in one screen."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 3. Adding Transactions -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Adding Transactions (Income and Expense)"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tap the large circular plus button floating at the bottom center of the screen. It is visible from both the Dashboard and the Transactions tab. Tapping it opens the Add Transaction screen."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to use it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Step 1: Choose Expense or Income at the top toggle. Step 2: Enter the amount in rupees. Step 3: Tap a category chip to select it (Food, Travel, Shopping, Health, etc. for expense, or Salary, Freelance, Gift, etc. for income). Step 4: Set the date using the date picker. Step 5: Choose a wallet (Cash, UPI, or Card). Step 6: Optionally add a short note. Step 7: Tap Save. The transaction is saved locally and uploaded to the cloud instantly."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Try adding 5 or more expenses across different categories and wallets. Then go to the Dashboard and watch how the chart, wallet balances, and budget bar all update to reflect your entries. Add a transaction with a past date to see how it appears in your history. Delete one and observe how your balance corrects itself."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 4. Transactions Tab -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Transaction History, Search and Filter"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tap the second icon in the bottom navigation bar (the list or history icon). This is the Transactions tab. All your recorded transactions appear here from newest to oldest."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to search"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="There is a search bar at the top of the Transactions tab. Type any keyword, amount, or category name into it and the list will filter in real time showing only matching results. Clear the search bar to see all transactions again."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to filter"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Use the filter chips (All, Expense, Income) just below the search bar to narrow down the list by transaction type. Combining a search term with the Expense filter is the fastest way to find a specific purchase."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="After adding several transactions, type Food in the search bar and see only food-related entries. Then switch the filter to Income and notice only income entries show. Try searching for a specific amount like 500 to find any transaction of that value. Swipe left on a transaction to delete it and watch your balance adjust."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 5. Wallets -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Wallets: Cash, UPI, and Card"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Wallet balances are shown on the Dashboard as three separate cards directly below your Total Balance. You also select a wallet every time you add a new transaction on the Add Transaction screen."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to use it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Cash is for physical money transactions like paying rent or buying from a street vendor. UPI is for digital transfers through apps like Google Pay, PhonePe, or Paytm. Card is for any credit or debit card payment at a shop, online store, or ATM withdrawal. Always select the method you actually used so your wallet balances stay accurate."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Add income of Rs. 10000 via UPI, then add a food expense of Rs. 300 via UPI. Check the UPI wallet card and verify it shows Rs. 9700. Then add a cash expense of Rs. 500 and confirm the Cash wallet balance dropped accordingly. This shows you exactly how wallet balances are isolated by payment method."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 6. Autopay -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Autopay and Recurring Expenses"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="The Recurring toggle is inside the Add Transaction screen. Scroll down after filling in the basic transaction details and you will see a Recurring switch. Turn it on to reveal the recurrence type selector. Autopay transactions appear in the Transactions tab with a CONFIRM and CANCEL bar at the bottom of their card."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to use it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Enable the Recurring switch, choose Daily, Weekly, or Monthly, then save the transaction normally. From that point on, every time you open the app it checks whether enough time has passed since the last automatic deduction. If it has, it logs the expense again automatically tagged with (Autopay) and deducts from your balance."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Set up a Daily recurring expense for a small amount like Rs. 50 labeled as Coffee. Close the app and reopen it the next day to see it automatically appear in your Transactions list with the (Autopay) tag. Then tap CANCEL on it to see how it removes both the entry and the future schedule permanently."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tip"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Set up all your real monthly subscriptions as autopay entries: Netflix, Spotify, Amazon Prime, Hotstar, gym, iCloud storage, etc. This way you never forget to track them and your monthly expense data stays 100 percent accurate without any manual effort."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 7. Budget Manager -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Monthly Budget Manager"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tap the wallet icon in the top-right action bar on the main screen. It is in the toolbar at the very top of the app next to the three-dot menu. Tapping it opens the Budget Manager page."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to use it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Select a category from the dropdown, type your spending limit in rupees, and tap Save Budget. You will see your entry appear as a row with a progress bar showing how much of that limit you have already used this month. You can add budgets for multiple categories. To update a limit, select the same category and save a new amount."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Set a Food budget of Rs. 2000. Then add a food expense of Rs. 1800. Go back to the Budget Manager and watch the Food progress bar sit at 90 percent. Now go to the Dashboard and observe the overall budget bar also reflecting this. Add one more food expense of Rs. 300 and see it go over 100 percent."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tip"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="At the start of every month, open the Budget Manager and review your limits. If you consistently overshoot a category, raise the limit or look for ways to cut there. If you always have leftover, tighten the limit so the Expense Predictor can give you a more accurate overspend warning."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 8. Expense Predictor -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Expense Predictor"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Scroll to the bottom of the Dashboard screen. In the Quick AI Insights section you will see the Expense Predictor card showing your projected monthly total and a message about whether you are on track or overspending."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How it works"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="It takes the total amount spent this month so far and divides by the current day of the month to get your average daily spend. Then it multiplies that by the total number of days in the month to predict your final total. If that number exceeds your monthly budget limit, a warning appears. It recalculates every time your transaction list changes."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Set a total monthly budget of Rs. 5000. Add expenses totaling Rs. 3000 in the first 10 days of the month. Check the predictor and it will calculate that at this rate you will spend around Rs. 9000 by end of month, which is far over budget, triggering a warning. Then delete some entries and watch the warning disappear when the projection drops below Rs. 5000."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 9. AI Chat Assistant -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="AI Financial Assistant (Chatbot)"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tap the AI or chat icon in the bottom navigation bar. This opens the AI Financial Assistant tab where you can have a full back-and-forth conversation about your money."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to use it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Type your question in the text box at the bottom and tap Send. The AI will reply in a few seconds with practical advice. You can ask follow-up questions in the same conversation and the AI maintains context within the session."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Sample questions you can try"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="- How do I save Rs. 10000 per month on a Rs. 40000 salary? - What is the 50-30-20 budget rule and how do I apply it? - I spend too much on food, give me practical tips to cut it. - Should I use a credit card or UPI for daily expenses? - How do I build an emergency fund from scratch? - What are the best ways to track subscriptions automatically? - How much should I spend on rent per month? - Explain the difference between saving and investing."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Pro tips for the chatbot"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tip 1: Be specific. Instead of just asking how to save money, say I earn Rs. 35000 per month and spend Rs. 8000 on food and Rs. 5000 on travel. How do I cut expenses? You will get much more targeted advice. Tip 2: Ask it to explain concepts simply. Most financial terms sound complicated but are easy to understand once explained. Tip 3: Use it to challenge your habits. Ask things like Is it bad that I spend 40 percent of income on food and listen to its reasoning. Tip 4: Your chat history is automatically saved so you can come back later and continue a conversation from where you left off."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 10. Financial Personality -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Financial Personality Detector"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where to find it"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Your personality badges appear on the Dashboard at the very bottom in the Quick AI Insights section. They are shown as colored badge chips with your personality type labels. The Detailed AI Insights button above them is what triggers the personality generation."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="How to generate your personality"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Make sure you have at least 3 expense transactions recorded this month. Then tap the Detailed AI Insights button on the Dashboard. The app sends your transaction data to the Groq AI, which analyzes your spending patterns and returns 3 unique personality badges tailored to your behavior. These are saved to the cloud and displayed every time you open the app."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Examples of personality types"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Weekend Spender, Die-hard Foodie, Cautious Saver, Impulsive Shopper, Travel Enthusiast, Midnight Splurger, Subscription Hoarder, Coffee Addict, Frugal Planner, Deal Hunter, Lifestyle Inflator, Digital Nomad, Power Saver, Bulk Buyer, Dining Loyalist, Early Bird Investor, Convenience Seeker, Smart Splurger. Your exact 3 badges depend entirely on your own transaction data."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Add 10 or more food and entertainment expenses and then generate your personality to see if you get a Foodie or Entertainment tag. Then delete those and add lots of travel expenses and regenerate to see if your badges shift to Travel Enthusiast. The AI is very sensitive to your actual data so different spending patterns will produce very different results."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 11. Multi-Device Sync -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorCard">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Multi-Device Cloud Sync"
+                        android:textColor="@color/colorPrimary" android:textSize="16sp"
+                        android:textStyle="bold" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Where it happens"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Sync happens automatically in the background the moment you log in. There is no button to press. Every transaction you add or delete, every budget you set, and every AI chat message you send is also immediately uploaded to the cloud in real time. You do not need to do anything manually."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="What gets synced"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Everything in the app is synced: all transactions including amount, category, date, note, wallet type, and autopay settings. All monthly budgets across all categories. Your complete AI assistant conversation history. Your financial personality badges. All of this is stored under your unique username in a secure Aiven PostgreSQL cloud database."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Things to experiment with"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="If you have two Android devices or an emulator, log in to the same account on both. Add an expense on one device and then open the app on the second device. Your transaction will appear on the second device automatically after it syncs on login. This proves that your data is truly cross-device and cloud-powered."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp" android:layout_marginBottom="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Tip"
+                        android:textColor="@color/colorTextPrimary" android:textSize="14sp"
+                        android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="If you ever change phones or do a factory reset, do not worry. Install the app, log in with your username and password, and your entire financial history will be fully restored within seconds. No data is ever stored only on the device."
+                        android:textColor="@color/colorTextSecondary" android:textSize="13sp"
+                        android:lineSpacingExtra="3dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

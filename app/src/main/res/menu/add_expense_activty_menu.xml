@@ -7,4 +7,9 @@
         android:orderInCategory="1"
         app:showAsAction="always" />
 
+    <item android:id="@+id/deleteButton"
+        android:title="Delete"
+        android:orderInCategory="2"
+        app:showAsAction="always" />
+
 </menu>

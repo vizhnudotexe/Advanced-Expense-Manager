@@ -1,111 +1,191 @@
-<android.support.constraint.ConstraintLayout
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="4dp">
 
-
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        app:cardCornerRadius="6dp"
-        android:elevation="7dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="@color/colorCard"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="3dp">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp">
-
-
-            <TextView
-                android:id="@+id/amountTextViewrv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:padding="2dp"
-                android:text="-300"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.956"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.173" />
-
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="horizontal">
 
+                <!-- Colored stripe on the left (set dynamically in adapter) -->
+                <View
+                    android:id="@+id/transactionStripe"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorIncome"/>
 
-                <TextView
-                    android:id="@+id/categoryTextViewrv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginEnd="8dp"
+                <!-- Category icon -->
+                <ImageView
+                    android:id="@+id/categoryIconView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="2dp"
-                    android:padding="2dp"
-                    android:text="Food"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:src="@drawable/ic_money"
+                    android:tint="@color/colorTextSecondary"/>
 
+                <!-- Category + Description + Date -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:paddingStart="8dp">
 
-                <TextView
-                    android:id="@+id/dateTextViewrv"
+                    <TextView
+                        android:id="@+id/categoryTextViewrv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Food"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/descriptionTextViewrv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="2dp">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/ic_wallet"
+                            android:tint="#6060A0"
+                            android:layout_marginEnd="4dp"/>
+
+                        <TextView
+                            android:id="@+id/walletBadgeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cash"
+                            android:textColor="#6060A0"
+                            android:textSize="11sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  ·  "
+                            android:textColor="#6060A0"
+                            android:textSize="11sp"/>
+
+                        <TextView
+                            android:id="@+id/dateTextViewrv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01-01-2024"
+                            android:textColor="#6060A0"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Amount + direction arrow -->
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="11dp"
-                    android:padding="2dp"
-                    android:text="14/09/2018"
-                    android:textSize="12sp"
-                     />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:id="@+id/directionArrowView"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_arrow_up"
+                        android:tint="@color/colorIncome"
+                        android:layout_marginEnd="4dp"/>
+
+                    <TextView
+                        android:id="@+id/amountTextViewrv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="500"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorIncome"/>
+                </LinearLayout>
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/descriptionTextViewrv"
+            <LinearLayout
+                android:id="@+id/autopayActionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="60dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="4dp"
-                android:text="Dominos"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical|end"
+                android:visibility="gone"
+                android:paddingBottom="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:background="#15000000">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Approve this autopay transaction?"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorTextSecondary"
+                    android:paddingStart="16dp"/>
 
+                <TextView
+                    android:id="@+id/rejectAutopayBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CANCEL"
+                    android:textColor="#FF5252"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/selectableItemBackground"/>
 
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/approveAutopayBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CONFIRM"
+                    android:textColor="#4CAF50"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:padding="8dp"
+                    android:background="?android:attr/selectableItemBackground"/>
+            </LinearLayout>
 
-    </android.support.v7.widget.CardView>
-
-</android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
