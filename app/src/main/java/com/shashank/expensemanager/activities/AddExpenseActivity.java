@@ -120,6 +120,15 @@ public class AddExpenseActivity extends AppCompatActivity {
                 selectedWallet = existingWallet;
                 highlightWalletChip(existingWallet);
             }
+            boolean isRecurring = intent.getBooleanExtra("recurring", false);
+            if (isRecurring) {
+                recurringSwitch.setChecked(true);
+                recurrenceTypeLayout.setVisibility(View.VISIBLE);
+                String recType = intent.getStringExtra("recurrenceType");
+                if ("Daily".equals(recType)) selectRecurrenceChip(chipDaily, "Daily");
+                else if ("Weekly".equals(recType)) selectRecurrenceChip(chipWeekly, "Weekly");
+                else if ("Monthly".equals(recType)) selectRecurrenceChip(chipMonthly, "Monthly");
+            }
         }
 
         // Wallet selection
@@ -323,7 +332,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     public void showDatePicker() {
-        DatePickerDialog dialog = new DatePickerDialog(this,
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.CustomDatePickerDialogTheme,
                 (view, year, month, day) -> {
                     myCalendar.set(Calendar.YEAR, year);
                     myCalendar.set(Calendar.MONTH, month);

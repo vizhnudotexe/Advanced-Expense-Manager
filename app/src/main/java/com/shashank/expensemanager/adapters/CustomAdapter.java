@@ -200,6 +200,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 intent.putExtra("id", entry.getId());
                 intent.putExtra("category", entry.getCategory());
                 intent.putExtra("wallet", entry.getWalletType());
+                intent.putExtra("recurring", entry.isRecurring());
+                if (entry.getRecurrenceType() != null) {
+                    intent.putExtra("recurrenceType", entry.getRecurrenceType());
+                }
                 context.startActivity(intent);
             });
         }

@@ -580,6 +580,17 @@ public class BalanceFragment extends Fragment implements AdapterView.OnItemSelec
         progressAiInsights.setVisibility(View.VISIBLE);
         tvAiInsights.setText("Analyzing patterns & predicting expenses...");
 
+        android.os.Handler loadingHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+        Runnable loadingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (progressAiInsights.getVisibility() == View.VISIBLE) {
+                    tvAiInsights.setText("Waking up AI on the free cloud...\n(This usually takes ~50 seconds initially)");
+                }
+            }
+        };
+        loadingHandler.postDelayed(loadingRunnable, 5000);
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
