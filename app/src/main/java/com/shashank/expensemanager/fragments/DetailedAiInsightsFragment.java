@@ -1,14 +1,11 @@
 package com.shashank.expensemanager.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +20,7 @@ import com.shashank.expensemanager.network.GroqApiClient;
 import com.shashank.expensemanager.transactionDb.AppDatabase;
 import com.shashank.expensemanager.transactionDb.AppExecutors;
 import com.shashank.expensemanager.transactionDb.TransactionEntry;
+import com.shashank.expensemanager.utils.Constants;
 
 import com.shashank.expensemanager.network.BackendSync;
 
@@ -62,7 +60,7 @@ public class DetailedAiInsightsFragment extends Fragment {
         AppExecutors.getInstance().diskIO().execute(() -> {
             List<ChatMessage> chats = mAppDb.aiDao().getAllChats();
             AppExecutors.getInstance().mainThread().execute(() -> {
-                if (chats.isEmpty()) {
+                if (chats == null || chats.isEmpty()) {
                     chatAdapter.addMessage(new ChatMessage("Hi! I'm your AI Financial Coach. Ask me anything about your spending habits, or how you can save more.", false));
                 } else {
                     for (ChatMessage c : chats) {
@@ -108,8 +106,8 @@ public class DetailedAiInsightsFragment extends Fragment {
             long endOfMonth = System.currentTimeMillis();
 
             List<TransactionEntry> transactions = mAppDb.transactionDao().getTransactionsByDateRange(startOfMonth, endOfMonth);
-            int totalExpense = mAppDb.transactionDao().getAmountbyCustomDates("Expense", startOfMonth, endOfMonth);
-            int totalIncome = mAppDb.transactionDao().getAmountbyCustomDates("Income", startOfMonth, endOfMonth);
+            int totalExpense = mAppDb.transactionDao().getAmountbyCustomDates(Constants.expenseCategory, startOfMonth, endOfMonth);
+            int totalIncome = mAppDb.transactionDao().getAmountbyCustomDates(Constants.incomeCategory, startOfMonth, endOfMonth);
 
             String fullPrompt;
             if (transactions != null && !transactions.isEmpty()) {

@@ -29,7 +29,11 @@ import okhttp3.Response;
 public class BackendSync {
 
     private static final String BASE_URL = LoginActivity.BACKEND_URL;
-    private static final OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .build();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public static void fetchAllAndSyncLocal(Context context, Runnable onSuccess) {
