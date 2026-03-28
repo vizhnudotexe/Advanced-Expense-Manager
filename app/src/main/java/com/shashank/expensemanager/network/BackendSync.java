@@ -122,8 +122,8 @@ public class BackendSync {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                // If offline, you might want to save locally anyway and sync later.
-                // For now, we just save locally.
+                // If offline or backend fails, save locally anyway
+                Log.e("BackendSync", "Transaction send failed, saving locally", e);
                 AppExecutors.getInstance().diskIO().execute(() -> {
                     AppDatabase.getInstance(context).transactionDao().insertExpense(entry);
                     if (onLocalSaved != null) AppExecutors.getInstance().mainThread().execute(onLocalSaved);
@@ -132,17 +132,30 @@ public class BackendSync {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String respBody = response.body().string();
                 if (response.isSuccessful()) {
                     try {
-                        JSONObject resObj = new JSONObject(response.body().string());
-                        entry.setId(resObj.getInt("id")); // Use backend ID globally
+                        JSONObject resObj = new JSONObject(respBody);
+                        entry.setId(resObj.getInt("id")); // Use backend ID
                         AppExecutors.getInstance().diskIO().execute(() -> {
                             AppDatabase.getInstance(context).transactionDao().insertExpense(entry);
                             if (onLocalSaved != null) AppExecutors.getInstance().mainThread().execute(onLocalSaved);
                         });
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Log.e("BackendSync", "Parse error on successful response", e);
+                        // Still save locally even if parse fails
+                        AppExecutors.getInstance().diskIO().execute(() -> {
+                            AppDatabase.getInstance(context).transactionDao().insertExpense(entry);
+                            if (onLocalSaved != null) AppExecutors.getInstance().mainThread().execute(onLocalSaved);
+                        });
                     }
+                } else {
+                    // On 503 or other errors, still save locally
+                    Log.e("BackendSync", "Backend returned error: " + response.code() + " - " + respBody);
+                    AppExecutors.getInstance().diskIO().execute(() -> {
+                        AppDatabase.getInstance(context).transactionDao().insertExpense(entry);
+                        if (onLocalSaved != null) AppExecutors.getInstance().mainThread().execute(onLocalSaved);
+                    });
                 }
             }
         });

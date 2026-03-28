@@ -134,11 +134,14 @@ public class BalanceFragment extends Fragment implements AdapterView.OnItemSelec
         });
 
         expenseList = new ArrayList<>();
+        
+        // Load all data initially - this will display any existing transactions
         getAllBalanceAmount();
         setupPieChart();
         setupLineChart();
         updateBudgetVisibility();
         loadWalletBalances();
+        
         return view;
     }
 
@@ -156,6 +159,16 @@ public class BalanceFragment extends Fragment implements AdapterView.OnItemSelec
                 
                 int spent = mAppDb.transactionDao().getAmountbyCustomDates(Constants.expenseCategory, startOfMonth, System.currentTimeMillis());
                 List<ExpenseList> categories = mAppDb.transactionDao().getSumExpenseByCategoriesCustomDate(startOfMonth, System.currentTimeMillis());
+                
+                // Check if there's any data
+                if (spent == 0 && (categories == null || categories.isEmpty())) {
+                    AppExecutors.getInstance().mainThread().execute(() -> {
+                        tvAiInsights.setText("Add some transactions to get personalized financial insights!");
+                        progressAiInsights.setVisibility(View.GONE);
+                        btnGenerateInsights.setEnabled(true);
+                    });
+                    return;
+                }
                 
                 StringBuilder cats = new StringBuilder();
                 for (ExpenseList e : categories) cats.append(e.getCategory()).append(": ").append(e.getAmount()).append(", ");
@@ -194,6 +207,20 @@ public class BalanceFragment extends Fragment implements AdapterView.OnItemSelec
         getAllBalanceAmount();
         loadWalletBalances();
         updateBudgetVisibility();
+    }
+
+    public void refreshData() {
+        try {
+            if (balanceTv != null && mAppDb != null && getViewLifecycleOwner() != null) {
+                getAllBalanceAmount();
+                loadWalletBalances();
+                setupPieChart();
+                setupLineChart();
+                updateBudgetVisibility();
+            }
+        } catch (Exception e) {
+            android.util.Log.e("BalanceFragment", "Error refreshing data", e);
+        }
     }
 
     private void setupSpinner() {

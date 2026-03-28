@@ -87,4 +87,14 @@ public class ExpenseFragment extends Fragment {
             applyFilters();
         });
     }
+
+    public void refreshData() {
+        try {
+            if (rv != null && getViewLifecycleOwner() != null) {
+                setupViewModel();
+            }
+        } catch (Exception e) {
+            android.util.Log.e("ExpenseFragment", "Error refreshing data", e);
+        }
+    }
 }

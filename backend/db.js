@@ -2,17 +2,17 @@ const { Pool } = require('pg');
 const fs = require('fs');
 require('dotenv').config();
 
-let dbUrl = process.env.DATABASE_URL || '';
-if (dbUrl.includes('?')) {
-  dbUrl = dbUrl.split('?')[0];
-}
-
 const pool = new Pool({
-  connectionString: dbUrl,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
     ca: fs.readFileSync(__dirname + '/ca.pem').toString(),
   },
+});
+
+// Test connection on startup
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
 });
 
 module.exports = {

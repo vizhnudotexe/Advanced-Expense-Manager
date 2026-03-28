@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     public static FloatingActionButton fab;
+    private SectionsPageAdapter adapter;
+    private boolean isFirstLoad = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh fragments only after first load to show updated data
+        if (!isFirstLoad && adapter != null) {
+            try {
+                adapter.refreshAllFragments();
+            } catch (Exception e) {
+                android.util.Log.e("MainActivity", "Error refreshing fragments", e);
+            }
+        }
+        isFirstLoad = false;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -86,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new ExpenseFragment(), "Transactions");
         adapter.addFragment(new BalanceFragment(), "Dashboard");
         adapter.addFragment(new DetailedAiInsightsFragment(), "Detailed AI Insights");

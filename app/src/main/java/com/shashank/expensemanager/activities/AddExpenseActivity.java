@@ -23,6 +23,7 @@ import com.shashank.expensemanager.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity {
 
@@ -35,15 +36,15 @@ public class AddExpenseActivity extends AppCompatActivity {
     LinearLayout recurrenceTypeLayout;
     TextView chipDaily, chipWeekly, chipMonthly;
 
-    String selectedCategory = "";
     String selectedWallet = "Cash";
     String selectedRecurrence = "";
-    View currentSelectedCategoryChip = null;
     LinearLayout currentSelectedWalletChip = null;
     Calendar myCalendar;
 
     String intentFrom;
     boolean isExpenseMode = false;
+    boolean isEditMode = false;
+    int editingTransactionId = -1;
 
     TransactionViewModel transactionViewModel;
 
@@ -82,14 +83,51 @@ public class AddExpenseActivity extends AppCompatActivity {
         intentFrom = intent.getStringExtra("from");
         if (intentFrom == null) intentFrom = "";
         isExpenseMode = intentFrom.equals(Constants.addExpenseString) || intentFrom.equals(Constants.editExpenseString);
+        isEditMode = intentFrom.equals(Constants.editExpenseString) || intentFrom.equals(Constants.editIncomeString);
+
+        if (isEditMode) {
+            editingTransactionId = intent.getIntExtra("id", -1);
+        }
 
         if (intentFrom.equals(Constants.addIncomeString)) {
             setTitle("Add Income");
-            selectedCategory = "Income";
+            hideExpenseOnlyCards();
+        } else if (intentFrom.equals(Constants.editIncomeString)) {
+            setTitle("Edit Income");
             hideExpenseOnlyCards();
         } else if (intentFrom.equals(Constants.addExpenseString)) {
             setTitle("Add Expense");
-            setupCategoryChips();
+        } else if (intentFrom.equals(Constants.editExpenseString)) {
+            setTitle("Edit Expense");
+        }
+
+        // Hide category UI (removed)
+        if (categoryChipsLayout != null) categoryChipsLayout.setVisibility(View.GONE);
+
+        // Populate edit fields
+        if (isEditMode) {
+            if (intent.hasExtra("amount")) {
+                amountTextInputEditText.setText(String.valueOf(intent.getIntExtra("amount", 0)));
+            }
+            if (intent.hasExtra("description")) {
+                descriptionTextInputEditText.setText(intent.getStringExtra("description"));
+            }
+            if (intent.hasExtra("date")) {
+                dateTextView.setText(intent.getStringExtra("date"));
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    myCalendar.setTime(sdf.parse(intent.getStringExtra("date")));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (intent.hasExtra("wallet")) {
+                String wallet = intent.getStringExtra("wallet");
+                selectWalletByName(wallet);
+            }
+            if (intent.hasExtra("recurring")) {
+                recurringSwitch.setChecked(intent.getBooleanExtra("recurring", false));
+            }
         }
 
         // Wallet selection
@@ -104,46 +142,6 @@ public class AddExpenseActivity extends AppCompatActivity {
     private void hideExpenseOnlyCards() {
         if (findViewById(R.id.categoryCard) != null)
             findViewById(R.id.categoryCard).setVisibility(View.GONE);
-    }
-
-    private void setupCategoryChips() {
-        int[] chipIds = {R.id.chipFood, R.id.chipTravel, R.id.chipClothes,
-                R.id.chipMovies, R.id.chipHealth, R.id.chipGrocery};
-        String[] catNames = {"Food", "Travel", "Clothes", "Movies", "Health", "Grocery"};
-        for (int i = 0; i < chipIds.length; i++) {
-            final LinearLayout chip = findViewById(chipIds[i]);
-            final String name = catNames[i];
-            if (chip != null) chip.setOnClickListener(v -> selectCategoryChip(chip, name));
-        }
-    }
-
-    private void selectCategoryChip(View chip, String category) {
-        if (currentSelectedCategoryChip != null)
-            currentSelectedCategoryChip.setBackgroundResource(R.drawable.chip_background);
-        chip.setBackgroundResource(R.drawable.chip_background_selected);
-        currentSelectedCategoryChip = chip;
-        selectedCategory = category;
-    }
-
-    private void selectWalletChip(LinearLayout chip, String wallet) {
-        if (currentSelectedWalletChip != null)
-            currentSelectedWalletChip.setBackgroundResource(R.drawable.chip_background);
-        chip.setBackgroundResource(R.drawable.chip_background_selected);
-        currentSelectedWalletChip = chip;
-        selectedWallet = wallet;
-    }
-
-    public void showDatePicker() {
-        new DatePickerDialog(this, (view, year, month, day) -> {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, day);
-            setDateToTextView();
-        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    public void setDateToTextView() {
-        dateTextView.setText(new SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault()).format(myCalendar.getTime()));
     }
 
     @Override
@@ -162,7 +160,65 @@ public class AddExpenseActivity extends AppCompatActivity {
             saveTransaction();
             return true;
         }
+        if (item.getItemId() == R.id.deleteButton && isEditMode) {
+            deleteTransaction();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteTransaction() {
+        if (editingTransactionId == -1) return;
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("Delete Transaction");
+        // Use a custom TextView for the message so it is always visible across themes
+        android.widget.TextView msgView = new android.widget.TextView(this);
+        msgView.setText("Are you sure you want to delete this transaction?");
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        msgView.setPadding(pad, pad, pad, pad);
+        msgView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 16);
+        int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+            msgView.setTextColor(android.graphics.Color.WHITE);
+        } else {
+            msgView.setTextColor(android.graphics.Color.DKGRAY);
+        }
+        builder.setView(msgView);
+        builder.setPositiveButton("Delete", (dialog, which) -> {
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                TransactionEntry entry = new TransactionEntry(
+                        0, "", "", new java.util.Date(), "", "", false, ""
+                );
+                entry.setId(editingTransactionId);
+                com.shashank.expensemanager.network.BackendSync.deleteTransaction(this, entry);
+                AppDatabase.getInstance(this).transactionDao().removeExpense(entry);
+                runOnUiThread(this::finish);
+            });
+        });
+        builder.setNegativeButton("Cancel", null);
+        android.app.AlertDialog dialog = builder.show();
+        try {
+            android.widget.Button positive = dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE);
+            android.widget.Button negative = dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE);
+            if (positive != null) positive.setTextColor(android.graphics.Color.parseColor("#D32F2F"));
+            if (negative != null) negative.setTextColor(android.graphics.Color.parseColor("#616161"));
+
+            if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+                android.view.Window window = dialog.getWindow();
+                if (window != null) {
+                    window.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#222222")));
+                }
+                int messageId = getResources().getIdentifier("message", "id", "android");
+                android.widget.TextView messageView = dialog.findViewById(messageId);
+                if (messageView != null) messageView.setTextColor(android.graphics.Color.WHITE);
+                int titleId = getResources().getIdentifier("alertTitle", "id", "android");
+                android.widget.TextView titleView = dialog.findViewById(titleId);
+                if (titleView != null) titleView.setTextColor(android.graphics.Color.WHITE);
+            }
+        } catch (Exception e) {
+            // ignore styling errors
+        }
     }
 
     public void saveTransaction() {
@@ -170,10 +226,15 @@ public class AddExpenseActivity extends AppCompatActivity {
             amountTextInputLayout.setError("Amount is required");
             return;
         }
+        if (descriptionTextInputEditText.getText() == null || descriptionTextInputEditText.getText().toString().trim().isEmpty()) {
+            descriptionTextInputLayout.setError("Note is required");
+            return;
+        }
+
         AppExecutors.getInstance().diskIO().execute(() -> {
             TransactionEntry entry = new TransactionEntry(
                     Integer.parseInt(amountTextInputEditText.getText().toString()),
-                    selectedCategory,
+                    descriptionTextInputEditText.getText().toString(), // Replace 'General' with the note/description
                     descriptionTextInputEditText.getText().toString(),
                     myCalendar.getTime(),
                     isExpenseMode ? Constants.expenseCategory : Constants.incomeCategory,
@@ -181,7 +242,50 @@ public class AddExpenseActivity extends AppCompatActivity {
                     recurringSwitch.isChecked(),
                     selectedRecurrence
             );
-            com.shashank.expensemanager.network.BackendSync.addTransaction(this, entry, this::finish);
+
+            if (isEditMode) {
+                entry.setId(editingTransactionId);
+                AppDatabase.getInstance(this).transactionDao().updateExpenseDetails(entry);
+                com.shashank.expensemanager.network.BackendSync.addTransaction(this, entry, this::finish);
+            } else {
+                AppDatabase.getInstance(this).transactionDao().insertExpense(entry);
+                com.shashank.expensemanager.network.BackendSync.addTransaction(this, entry, this::finish);
+            }
         });
+        // Close activity immediately to avoid duplicate saves when user taps Save multiple times.
+        // Backend sync and local insert run in background.
+        finish();
+    }
+
+    private void selectWalletChip(LinearLayout chip, String wallet) {
+        if (currentSelectedWalletChip != null)
+            currentSelectedWalletChip.setBackgroundResource(R.drawable.chip_background);
+        chip.setBackgroundResource(R.drawable.chip_background_selected);
+        currentSelectedWalletChip = chip;
+        selectedWallet = wallet;
+    }
+
+    private void selectWalletByName(String walletName) {
+        if (walletName == null) return;
+        if (walletName.equalsIgnoreCase("UPI")) {
+            selectWalletChip(chipWalletUpi, "UPI");
+        } else if (walletName.equalsIgnoreCase("Card")) {
+            selectWalletChip(chipWalletCard, "Card");
+        } else {
+            selectWalletChip(chipWalletCash, "Cash");
+        }
+    }
+
+    public void showDatePicker() {
+        new DatePickerDialog(this, R.style.CustomDatePickerDialogTheme, (view, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, day);
+            setDateToTextView();
+        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void setDateToTextView() {
+        dateTextView.setText(new SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault()).format(myCalendar.getTime()));
     }
 }
