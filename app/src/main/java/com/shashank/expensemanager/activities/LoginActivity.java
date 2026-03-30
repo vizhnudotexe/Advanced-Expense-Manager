@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     // Use 192.168.29.107 for physical devices on same Wi-Fi
     // Use https://strong-jokes-taste.loca.lt as a temporary public tunnel to your local PC
-    public static final String BACKEND_URL = "https://strong-jokes-taste.loca.lt"; 
+    public static final String BACKEND_URL = "https://advanced-expense-manager-1.onrender.com"; 
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,11 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         btnLogin.setEnabled(false);
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .build();
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         JSONObject jsonObject = new JSONObject();
         try {
@@ -143,4 +147,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-

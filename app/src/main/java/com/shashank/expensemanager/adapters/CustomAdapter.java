@@ -45,7 +45,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TransactionEntry entry = transactionEntries.get(position);
-        String category = entry.getCategory() != null ? entry.getCategory() : "";
+        String category = entry.getCategory() != null && !entry.getCategory().isEmpty() 
+            ? entry.getCategory() 
+            : (entry.getTransactionType() != null ? entry.getTransactionType() : "Other");
         boolean isIncome = entry.getTransactionType().equals(Constants.incomeCategory);
 
         holder.categoryTextViewrv.setText(category);

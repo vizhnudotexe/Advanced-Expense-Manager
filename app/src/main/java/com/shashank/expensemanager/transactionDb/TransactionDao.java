@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
+import com.shashank.expensemanager.utils.ExpenseList;
 
 
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public interface TransactionDao {
     @Query("select sum(amount) from transactionTable where category=:category and date between :startDate and :endDate")
     int getSumExpenseByCategoryCustomDate(String category,long startDate, long endDate);
 
+    @Query("SELECT category, SUM(amount) as amount FROM transactionTable WHERE transactionType = 'Expense' AND date BETWEEN :startDate AND :endDate GROUP BY category")
+    List<ExpenseList> getSumExpenseByCategoriesCustomDate(long startDate, long endDate);
+
     @Query("select min(date) from transactionTable ")
     long getFirstDate();
 
@@ -55,4 +59,3 @@ public interface TransactionDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateExpenseDetails(TransactionEntry transactionEntry);
 }
-

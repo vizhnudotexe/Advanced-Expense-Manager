@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.shashank.expensemanager.fragments.BalanceFragment;
+import com.shashank.expensemanager.fragments.ExpenseFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,21 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
         FragmentTitleList.add(title);
     }
 
-
+    public void refreshAllFragments() {
+        try {
+            for (Fragment fragment : FragmentList) {
+                if (fragment != null && fragment.isAdded()) {
+                    if (fragment instanceof ExpenseFragment) {
+                        ((ExpenseFragment) fragment).refreshData();
+                    } else if (fragment instanceof BalanceFragment) {
+                        ((BalanceFragment) fragment).refreshData();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.e("SectionsPageAdapter", "Error refreshing fragments", e);
+        }
+    }
 
     public SectionsPageAdapter(FragmentManager fm) {
         super(fm);
@@ -40,4 +57,3 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
         return FragmentList.size();
     }
 }
-

@@ -37,8 +37,7 @@ public class ExpenseFragment extends Fragment {
     private TransactionViewModel transactionViewModel;
     private AppDatabase mAppDb;
 
-    // Search & filter state
-    private String activeFilter = "all"; // "all", "income", "expense"
+    private String activeFilter = "all";
     private String activeSearch = "";
 
     @Nullable
@@ -47,13 +46,11 @@ public class ExpenseFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_expense, container, false);
 
         rv = view.findViewById(R.id.transactionRecyclerView);
-        rv.setHasFixedSize(false);
         transactionEntries = new ArrayList<>();
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mAppDb = AppDatabase.getInstance(getContext());
 
-        // --- Search bar ---
         EditText searchEditText = view.findViewById(R.id.searchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -63,59 +60,6 @@ public class ExpenseFragment extends Fragment {
             }
             @Override public void afterTextChanged(Editable s) {}
         });
-
-        // --- Filter chips ---
-        TextView filterAll = view.findViewById(R.id.filterAll);
-        TextView filterIncome = view.findViewById(R.id.filterIncome);
-        TextView filterExpense = view.findViewById(R.id.filterExpense);
-
-        View.OnClickListener filterClickListener = v -> {
-            String type;
-            if (v.getId() == R.id.filterIncome) type = Constants.incomeCategory;
-            else if (v.getId() == R.id.filterExpense) type = Constants.expenseCategory;
-            else type = "all";
-
-            activeFilter = type;
-
-            // Update chip visuals
-            filterAll.setBackground(getResources().getDrawable(R.drawable.chip_background));
-            filterAll.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-            filterIncome.setBackground(getResources().getDrawable(R.drawable.chip_background));
-            filterIncome.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-            filterExpense.setBackground(getResources().getDrawable(R.drawable.chip_background));
-            filterExpense.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-
-            ((TextView) v).setBackground(getResources().getDrawable(R.drawable.chip_background_selected));
-            ((TextView) v).setTextColor(0xFFFFFFFF);
-
-            applyFilters();
-        };
-
-        filterAll.setOnClickListener(filterClickListener);
-        filterIncome.setOnClickListener(filterClickListener);
-        filterExpense.setOnClickListener(filterClickListener);
-
-        // --- Swipe to delete (LEFT swipe) ---
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                final int position = viewHolder.getAdapterPosition();
-                final List<TransactionEntry> entries = customAdapter.getTransactionEntries();
-                final TransactionEntry deletedEntry = entries.get(position);
-
-                com.shashank.expensemanager.network.BackendSync.deleteTransaction(getContext(), deletedEntry);
-
-                Snackbar.make(view, "Transaction deleted", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", v -> com.shashank.expensemanager.network.BackendSync.addTransaction(getContext(), deletedEntry, null))
-                        .setActionTextColor(0xFFEA80FC)
-                        .show();
-            }
-        }).attachToRecyclerView(rv);
 
         setupViewModel();
         return view;
@@ -132,23 +76,25 @@ public class ExpenseFragment extends Fragment {
 
     public void setupViewModel() {
         transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
-        transactionViewModel.getExpenseList().observe(getViewLifecycleOwner(), new Observer<List<TransactionEntry>>() {
-            @Override
-            public void onChanged(@Nullable List<TransactionEntry> entries) {
-                transactionEntries = entries;
-                if (customAdapter == null) {
-                    customAdapter = new CustomAdapter(getActivity(), entries);
-                } else {
-                    customAdapter.updateData(entries);
-                }
-                
-                if (rv.getAdapter() == null) {
-                    rv.setAdapter(customAdapter);
-                }
-
-                applyFilters();
+        transactionViewModel.getExpenseList().observe(getViewLifecycleOwner(), entries -> {
+            transactionEntries = entries;
+            if (customAdapter == null) {
+                customAdapter = new CustomAdapter(getActivity(), entries);
+            } else {
+                customAdapter.updateData(entries);
             }
+            if (rv.getAdapter() == null) rv.setAdapter(customAdapter);
+            applyFilters();
         });
     }
-}
 
+    public void refreshData() {
+        try {
+            if (rv != null && getViewLifecycleOwner() != null) {
+                setupViewModel();
+            }
+        } catch (Exception e) {
+            android.util.Log.e("ExpenseFragment", "Error refreshing data", e);
+        }
+    }
+}

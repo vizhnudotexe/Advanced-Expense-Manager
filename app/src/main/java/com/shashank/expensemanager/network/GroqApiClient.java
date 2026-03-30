@@ -34,7 +34,11 @@ public class GroqApiClient {
 
     public GroqApiClient(Context context) {
         this.context = context;
-        client = new OkHttpClient();
+        client = new OkHttpClient.Builder()
+                .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .build();
         gson = new Gson();
         mainHandler = new Handler(Looper.getMainLooper());
     }
